@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>QeNFC — Google Review NFC & QR Cards | ₹100/piece</title>
+<meta name="description" content="QeNFC smart review cards — tap or scan to collect Google reviews instantly. Built-in digital portfolio page with your logo, website, and social links. All-India delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --g-blue:#4285F4;
+    --g-red:#EA4335;
+    --g-yellow:#FBBC05;
+    --g-green:#34A853;
+    --ink:#202124;
+    --ink-2:#5F6368;
+    --line:#DADCE0;
+    --surface:#F8F9FA;
+    --surface-2:#F1F3F4;
+    --white:#FFFFFF;
+    --radius:14px;
+    --radius-sm:8px;
+    --shadow-1:0 1px 2px rgba(60,64,67,.15), 0 1px 3px rgba(60,64,67,.12);
+    --shadow-2:0 2px 6px rgba(60,64,67,.18), 0 4px 12px rgba(60,64,67,.10);
+    --wa-green:#25D366;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Roboto',Arial,sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  /* ===== Header ===== */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:var(--white);
+    border-bottom:1px solid var(--line);
+    padding:12px 16px;
+  }
+  .header-inner{
+    max-width:1100px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-size:24px; font-weight:900; letter-spacing:-0.5px;
+    display:flex; align-items:center; gap:1px;
+  }
+  .logo span:nth-child(1){color:var(--g-blue);}
+  .logo span:nth-child(2){color:var(--g-red);}
+  .logo span:nth-child(3){color:var(--g-yellow);}
+  .logo span:nth-child(4){color:var(--g-blue);}
+  .logo span:nth-child(5){color:var(--g-green);}
+  .header-tag{
+    font-size:11px; color:var(--ink-2); display:block; font-weight:400; letter-spacing:.2px;
+  }
+  .header-cta{
+    background:var(--g-blue); color:#fff; border:none; border-radius:20px;
+    padding:9px 16px; font-size:13px; font-weight:700; cursor:pointer;
+  }
+
+  /* ===== Layout ===== */
+  main{max-width:1100px; margin:0 auto; padding:0 0 40px;}
+  .top-grid{display:block;}
+  @media(min-width:860px){
+    .top-grid{display:grid; grid-template-columns:1.05fr 1fr; gap:36px; padding:28px 24px 0;}
+  }
+
+  /* ===== Gallery ===== */
+  .gallery{padding:12px 0 0;}
+  @media(min-width:860px){ .gallery{padding:0;} }
+  .gallery-main{
+    background:var(--surface); border-radius:var(--radius);
+    overflow:hidden; position:relative; aspect-ratio:1/1;
+  }
+  .gallery-track{
+    display:flex; height:100%; transition:transform .35s ease;
+  }
+  .gallery-track img{width:100%; height:100%; object-fit:cover; flex:0 0 100%;}
+  .gallery-dots{
+    display:flex; gap:6px; justify-content:center; margin-top:10px;
+  }
+  .gallery-dots button{
+    width:7px; height:7px; border-radius:50%; border:none; background:var(--line); padding:0; cursor:pointer;
+  }
+  .gallery-dots button.active{background:var(--g-blue); width:18px; border-radius:5px; transition:.2s;}
+  .thumbs{display:flex; gap:8px; margin-top:10px; padding:0 4px;}
+  .thumbs button{
+    border:2px solid transparent; border-radius:10px; padding:0; background:var(--surface);
+    width:64px; height:64px; overflow:hidden; cursor:pointer; flex-shrink:0;
+  }
+  .thumbs button.active{border-color:var(--g-blue);}
+  .thumbs img{width:100%; height:100%; object-fit:cover;}
+
+  /* ===== Product info ===== */
+  .info{padding:18px 16px 0;}
+  @media(min-width:860px){ .info{padding:0;} }
+  .badge-row{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+  .badge{
+    font-size:11px; font-weight:700; padding:4px 9px; border-radius:20px;
+  }
+  .badge.blue{background:#E8F0FE; color:var(--g-blue);}
+  .badge.green{background:#E6F4EA; color:var(--g-green);}
+  .badge.red{background:#FCE8E6; color:var(--g-red);}
+  h1.product-title{
+    font-size:22px; line-height:1.3; margin:0 0 6px; font-weight:700;
+  }
+  .product-sub{color:var(--ink-2); font-size:14px; margin:0 0 10px;}
+  .rating-row{display:flex; align-items:center; gap:8px; margin-bottom:14px;}
+  .stars{color:var(--g-yellow); font-size:15px; letter-spacing:1px;}
+  .rating-count{color:var(--g-blue); font-size:13px; font-weight:500;}
+
+  .price-box{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px; margin-bottom:16px;
+  }
+  .price-row{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .price-now{font-size:30px; font-weight:900; color:var(--ink);}
+  .price-was{font-size:16px; color:var(--ink-2); text-decoration:line-through; text-decoration-color:var(--g-red);}
+  .price-off{font-size:13px; font-weight:700; color:var(--g-green);}
+  .price-unit-note{font-size:12px; color:var(--ink-2); margin-top:4px;}
+
+  .qty-block{margin-top:16px;}
+  .qty-label-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+  .qty-label{font-size:13px; font-weight:700; color:var(--ink);}
+  .qty-value{
+    font-family:'Roboto Mono',monospace; font-size:15px; font-weight:700; color:var(--g-blue);
+    background:#E8F0FE; padding:3px 10px; border-radius:8px; min-width:52px; text-align:center;
+  }
+  input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:4px;
+    background:linear-gradient(90deg, var(--g-blue) 0%, var(--g-blue) var(--fill,0%), var(--line) var(--fill,0%), var(--line) 100%);
+    outline:none; margin:8px 0;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%;
+    background:var(--white); border:3px solid var(--g-blue); box-shadow:var(--shadow-1); cursor:pointer; margin-top:-1px;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:22px; height:22px; border-radius:50%; background:var(--white); border:3px solid var(--g-blue);
+    box-shadow:var(--shadow-1); cursor:pointer;
+  }
+  .qty-minmax{display:flex; justify-content:space-between; font-size:11px; color:var(--ink-2);}
+  .qty-steppers{display:flex; align-items:center; gap:10px; margin-top:12px;}
+  .stepper-btn{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--white);
+    font-size:18px; font-weight:700; color:var(--g-blue); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .stepper-btn:active{background:var(--surface-2);}
+  .qty-input{
+    width:70px; text-align:center; font-size:15px; font-weight:700; padding:8px 4px;
+    border:1px solid var(--line); border-radius:8px; font-family:'Roboto Mono',monospace;
+  }
+
+  .total-row{
+    display:flex; justify-content:space-between; align-items:center; margin-top:16px;
+    padding-top:14px; border-top:1px dashed var(--line);
+  }
+  .total-label{font-size:13px; color:var(--ink-2);}
+  .total-price-wrap{text-align:right;}
+  .total-now{font-size:22px; font-weight:900; color:var(--ink);}
+  .total-was{font-size:13px; color:var(--ink-2); text-decoration:line-through; text-decoration-color:var(--g-red); margin-left:6px;}
+  .total-save{font-size:12px; color:var(--g-green); font-weight:700;}
+
+  .order-now-btn{
+    width:100%; margin-top:16px; background:var(--g-blue); color:#fff; border:none;
+    padding:15px; font-size:16px; font-weight:700; border-radius:28px; cursor:pointer;
+    box-shadow:var(--shadow-1); display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .order-now-btn:active{background:#3367D6;}
+  .cod-note{
+    text-align:center; font-size:12px; color:var(--g-red); font-weight:500; margin-top:10px;
+  }
+  .delivery-note{
+    display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-2); margin-top:12px;
+  }
+  .dot{width:6px; height:6px; border-radius:50%; flex-shrink:0;}
+  .dot.blue{background:var(--g-blue);} .dot.green{background:var(--g-green);} .dot.yellow{background:var(--g-yellow);}
+
+  /* ===== Section shared ===== */
+  .section{padding:34px 16px 0;}
+  .section-head{margin-bottom:16px;}
+  .section-eyebrow{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--g-blue); margin:0 0 4px;
+  }
+  .section-title{font-size:19px; font-weight:700; margin:0;}
+  .section-sub{font-size:13.5px; color:var(--ink-2); margin:4px 0 0;}
+
+  /* Features grid */
+  .feature-grid{
+    display:grid; grid-template-columns:1fr; gap:12px; margin-top:16px;
+  }
+  @media(min-width:640px){ .feature-grid{grid-template-columns:1fr 1fr;} }
+  .feature-card{
+    border:1px solid var(--line); border-radius:var(--radius); padding:16px; background:var(--white);
+  }
+  .feature-icon{
+    width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:18px; margin-bottom:10px; color:#fff; font-weight:700;
+  }
+  .feature-icon.blue{background:var(--g-blue);}
+  .feature-icon.red{background:var(--g-red);}
+  .feature-icon.yellow{background:var(--g-yellow); color:var(--ink);}
+  .feature-icon.green{background:var(--g-green);}
+  .feature-card h3{font-size:14.5px; margin:0 0 4px;}
+  .feature-card p{font-size:13px; color:var(--ink-2); margin:0; line-height:1.5;}
+
+  /* Handles chips */
+  .handle-chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .chip{
+    font-size:12.5px; font-weight:500; padding:7px 12px; border-radius:20px; border:1px solid var(--line);
+    display:flex; align-items:center; gap:6px; background:var(--surface);
+  }
+  .chip .dot{width:8px; height:8px;}
+
+  /* How it works */
+  .steps{display:grid; grid-template-columns:1fr; gap:10px; margin-top:16px;}
+  @media(min-width:640px){ .steps{grid-template-columns:repeat(3,1fr);} }
+  .step{
+    background:var(--surface); border-radius:var(--radius); padding:16px; border:1px solid var(--line);
+  }
+  .step-num{
+    width:26px; height:26px; border-radius:50%; background:var(--white); border:2px solid var(--g-blue);
+    color:var(--g-blue); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-bottom:10px;
+  }
+  .step h4{font-size:13.5px; margin:0 0 4px;}
+  .step p{font-size:12.5px; color:var(--ink-2); margin:0; line-height:1.5;}
+
+  /* Setup help banner */
+  .setup-help{
+    margin-top:24px; border-radius:var(--radius); padding:18px;
+    background:linear-gradient(135deg,#4285F4 0%, #34A853 100%);
+    color:#fff; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .setup-help .ig-icon{
+    width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,.2);
+    display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
+  }
+  .setup-help-text{flex:1; min-width:180px;}
+  .setup-help-text strong{font-size:14.5px; display:block; margin-bottom:2px;}
+  .setup-help-text span{font-size:12.5px; opacity:.92;}
+  .setup-help a.ig-link{
+    background:#fff; color:var(--ink); font-size:13px; font-weight:700; padding:9px 16px;
+    border-radius:20px; text-decoration:none; white-space:nowrap;
+  }
+
+  /* Trust strip */
+  .trust-strip{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px;
+  }
+  @media(min-width:640px){ .trust-strip{grid-template-columns:repeat(4,1fr);} }
+  .trust-item{
+    text-align:center; padding:14px 8px; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--white);
+  }
+  .trust-item .ti-icon{font-size:20px; margin-bottom:6px;}
+  .trust-item p{font-size:11.5px; color:var(--ink-2); margin:0; line-height:1.4;}
+
+  /* Footer */
+  footer{
+    margin-top:40px; background:var(--surface); border-top:1px solid var(--line); padding:28px 16px 100px;
+  }
+  .footer-inner{max-width:1100px; margin:0 auto;}
+  .footer-logo{font-size:19px; font-weight:900; margin-bottom:6px;}
+  .footer-logo span:nth-child(1){color:var(--g-blue);}
+  .footer-logo span:nth-child(2){color:var(--g-red);}
+  .footer-logo span:nth-child(3){color:var(--g-yellow);}
+  .footer-logo span:nth-child(4){color:var(--g-blue);}
+  .footer-logo span:nth-child(5){color:var(--g-green);}
+  footer p{font-size:12.5px; color:var(--ink-2); line-height:1.6; max-width:520px;}
+  .footer-links{display:flex; gap:16px; flex-wrap:wrap; margin-top:14px;}
+  .footer-links a{font-size:12.5px; color:var(--g-blue); text-decoration:none; font-weight:500;}
+  .footer-fine{font-size:11px; color:var(--ink-2); margin-top:20px; opacity:.8;}
+
+  /* ===== Floating WhatsApp help ===== */
+  .fab-help{
+    position:fixed; right:16px; bottom:16px; z-index:50;
+    background:var(--wa-green); color:#fff; border:none; border-radius:30px;
+    padding:13px 18px; font-size:13.5px; font-weight:700; box-shadow:var(--shadow-2);
+    display:flex; align-items:center; gap:8px; cursor:pointer; text-decoration:none;
+    animation:fab-pop .4s ease;
+  }
+  @keyframes fab-pop{from{transform:scale(.85); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .fab-help svg{width:20px; height:20px; flex-shrink:0;}
+
+  /* ===== Modal ===== */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(32,33,36,.55); z-index:100;
+    display:none; align-items:flex-end; justify-content:center;
+  }
+  .modal-overlay.open{display:flex;}
+  @media(min-width:640px){ .modal-overlay{align-items:center;} }
+  .modal-panel{
+    background:#fff; width:100%; max-width:520px; border-radius:20px 20px 0 0;
+    max-height:92vh; overflow-y:auto; padding:0; animation:sheet-up .28s ease;
+  }
+  @media(min-width:640px){ .modal-panel{border-radius:20px; max-height:88vh;} }
+  @keyframes sheet-up{from{transform:translateY(24px); opacity:0;} to{transform:translateY(0); opacity:1;}}
+  .modal-head{
+    position:sticky; top:0; background:#fff; z-index:2; padding:16px 18px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .modal-head h2{font-size:16px; margin:0; font-weight:700;}
+  .modal-close{
+    background:var(--surface-2); border:none; width:32px; height:32px; border-radius:50%;
+    font-size:16px; cursor:pointer; color:var(--ink-2);
+  }
+  .modal-body{padding:16px 18px 24px;}
+  .form-row{margin-bottom:14px;}
+  .form-row label{
+    display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink);
+  }
+  .form-row .hint{font-weight:400; color:var(--ink-2); font-size:11.5px;}
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%; padding:12px 12px; border:1px solid var(--line); border-radius:10px;
+    font-size:14.5px; font-family:'Roboto',Arial,sans-serif; background:var(--surface); color:var(--ink);
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{
+    outline:2px solid var(--g-blue); outline-offset:1px; background:#fff;
+  }
+  .form-row textarea{resize:vertical; min-height:64px;}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .form-summary{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px; margin:18px 0;
+  }
+  .form-summary-row{display:flex; justify-content:space-between; font-size:13px; padding:3px 0; color:var(--ink-2);}
+  .form-summary-row strong{color:var(--ink); font-weight:700;}
+  .form-summary-total{
+    display:flex; justify-content:space-between; font-size:16px; font-weight:900; margin-top:8px; padding-top:8px; border-top:1px dashed var(--line);
+  }
+  .wa-submit-btn{
+    width:100%; background:var(--wa-green); color:#fff; border:none; padding:15px;
+    font-size:15.5px; font-weight:700; border-radius:28px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:var(--shadow-1);
+  }
+  .wa-submit-btn svg{width:20px; height:20px;}
+  .form-note{font-size:11.5px; color:var(--ink-2); text-align:center; margin-top:10px; line-height:1.5;}
+  .field-error{font-size:11.5px; color:var(--g-red); margin-top:4px; display:none;}
+  .form-row.invalid input, .form-row.invalid select, .form-row.invalid textarea{border-color:var(--g-red);}
+  .form-row.invalid .field-error{display:block;}
+
+  /* Toast */
+  .toast-overlay{
+    position:fixed; inset:0; background:rgba(32,33,36,.6); z-index:200;
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .toast-overlay.open{display:flex;}
+  .toast-box{
+    background:#fff; border-radius:18px; padding:26px 22px; max-width:340px; text-align:center;
+    animation:sheet-up .25s ease;
+  }
+  .toast-box .wa-circle{
+    width:56px; height:56px; border-radius:50%; background:#E6F9EE; display:flex; align-items:center; justify-content:center;
+    margin:0 auto 14px;
+  }
+  .toast-box .wa-circle svg{width:28px; height:28px;}
+  .toast-box h3{font-size:16px; margin:0 0 8px;}
+  .toast-box p{font-size:13px; color:var(--ink-2); line-height:1.6; margin:0 0 18px;}
+  .toast-box .spinner{
+    width:22px; height:22px; border:3px solid var(--surface-2); border-top-color:var(--g-blue);
+    border-radius:50%; margin:0 auto; animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .toast-continue{
+    background:var(--wa-green); color:#fff; border:none; padding:12px 20px; border-radius:24px;
+    font-size:14px; font-weight:700; cursor:pointer; width:100%; margin-top:4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="header-inner">
+    <div>
+      <div class="logo"><span>Q</span><span>e</span><span>N</span><span>F</span><span>C</span></div>
+      <span class="header-tag">Smart Google Review Cards</span>
+    </div>
+    <button class="header-cta" onclick="document.getElementById('buy-box').scrollIntoView({behavior:'smooth'})">Buy now</button>
+  </div>
+</header>
+
+<main>
+  <div class="top-grid">
+    <!-- ============ GALLERY ============ -->
+    <div class="gallery">
+      <div class="gallery-main">
+        <div class="gallery-track" id="galleryTrack">
+          <!-- Replace these 3 src values with your real product photos, e.g. images/product-1.jpg -->
+          <img src="images/product-1.jpg" data-fallback="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQyODVGNCIvPgo8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzM0QTg1MyIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNGQkJDMDUiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0YxRjNGNCIvPgo8cmVjdCB4PSI2MCIgeT0iMTIwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE3MCIgcng9IjE2IiBmaWxsPSJ1cmwoI2cxKSIvPgo8cmVjdCB4PSI2MCIgeT0iMTIwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE3MCIgcng9IjE2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz4KPGNpcmNsZSBjeD0iOTAiIGN5PSIxNTAiIHI9IjEwIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjAuOSIvPgo8dGV4dCB4PSIxMTIiIHk9IjE1NyIgZm9udC1mYW1pbHk9IlJvYm90bywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiPlFlTkZDPC90ZXh0Pgo8dGV4dCB4PSI5MCIgeT0iMjQ1IiBmb250LWZhbWlseT0iUm9ib3RvLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIwLjkiPlRhcCBvciBTY2FuIHRvIFJldmlldzwvdGV4dD4KPHJlY3QgeD0iMjcwIiB5PSIyMjUiIHdpZHRoPSI0NSIgaGVpZ2h0PSI0NSIgcng9IjYiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC45Ii8+CjxyZWN0IHg9IjI3OSIgeT0iMjM0IiB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjAyMTI0Ii8+CjxyZWN0IHg9IjI5OCIgeT0iMjM0IiB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjAyMTI0Ii8+CjxyZWN0IHg9IjI3OSIgeT0iMjUzIiB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjAyMTI0Ii8+CjxyZWN0IHg9IjI5OCIgeT0iMjUzIiB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMjAyMTI0Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMzM1IiBmb250LWZhbWlseT0iUm9ib3RvLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVGNjM2OCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UHJvZHVjdCBwaG90byAxIOKAlCByZXBsYWNlIG1lPC90ZXh0Pgo8L3N2Zz4=" alt="QeNFC card front — tap or scan to review" onerror="this.onerror=null;this.src=this.dataset.fallback;">
+          <img src="images/product-2.jpg" data-fallback="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIj4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNGMUYzRjQiLz4KPHJlY3QgeD0iNjAiIHk9IjExMCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxODAiIHJ4PSIxNiIgZmlsbD0iIzIwMjEyNCIvPgo8ZyBzdHJva2U9IiNFQTQzMzUiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KPHBhdGggZD0iTTEyMCAyMDAgYTMwIDMwIDAgMCAxIDAgLTQyIi8+CjxwYXRoIGQ9Ik0xMDggMjEyIGE0OCA0OCAwIDAgMSAwIC02NiIvPgo8cGF0aCBkPSJNOTYgMjI0IGE2NiA2NiAwIDAgMSAwIC05MCIvPgo8L2c+CjxyZWN0IHg9IjIzMCIgeT0iMTUwIiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHJ4PSI2IiBmaWxsPSIjZmZmZmZmIi8+CjxnIGZpbGw9IiMyMDIxMjQiPgo8cmVjdCB4PSIyNDAiIHk9IjE2MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0Ii8+CjxyZWN0IHg9IjI2MCIgeT0iMTYwIiB3aWR0aD0iOCIgaGVpZ2h0PSI4Ii8+CjxyZWN0IHg9IjI5NiIgeT0iMTYwIiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiLz4KPHJlY3QgeD0iMjQwIiB5PSIxODAiIHdpZHRoPSI4IiBoZWlnaHQ9IjgiLz4KPHJlY3QgeD0iMjc0IiB5PSIxODAiIHdpZHRoPSI4IiBoZWlnaHQ9IjgiLz4KPHJlY3QgeD0iMjk2IiB5PSIxODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIvPgo8cmVjdCB4PSIyNDAiIHk9IjIxMiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0Ii8+CjxyZWN0IHg9IjI2NiIgeT0iMjA0IiB3aWR0aD0iOCIgaGVpZ2h0PSIyNCIvPgo8cmVjdCB4PSIyOTYiIHk9IjIxMiIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0Ii8+CjwvZz4KPHRleHQgeD0iMjAwIiB5PSIzMzUiIGZvbnQtZmFtaWx5PSJSb2JvdG8sIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNUY2MzY4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Qcm9kdWN0IHBob3RvIDIg4oCUIE5GQyArIFFSIOKAlCByZXBsYWNlIG1lPC90ZXh0Pgo8L3N2Zz4=" alt="QeNFC card back — NFC chip and QR code" onerror="this.onerror=null;this.src=this.dataset.fallback;">
+          <img src="images/product-3.jpg" data-fallback="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIj4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNGMUYzRjQiLz4KPHJlY3QgeD0iMTMwIiB5PSI1NSIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIyOTAiIHJ4PSIyMiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjREFEQ0UwIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTE1IiByPSIyMiIgZmlsbD0iIzQyODVGNCIvPgo8cmVjdCB4PSIxNjAiIHk9IjE0OCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjEwIiByeD0iNSIgZmlsbD0iIzIwMjEyNCIgb3BhY2l0eT0iMC44NSIvPgo8cmVjdCB4PSIxNzUiIHk9IjE2NCIgd2lkdGg9IjUwIiBoZWlnaHQ9IjciIHJ4PSIzLjUiIGZpbGw9IiM1RjYzNjgiLz4KPGNpcmNsZSBjeD0iMTcwIiBjeT0iMjAwIiByPSIxMiIgZmlsbD0iI0VBNDMzNSIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjEyIiBmaWxsPSIjRkJCQzA1Ii8+CjxjaXJjbGUgY3g9IjIzMCIgY3k9IjIwMCIgcj0iMTIiIGZpbGw9IiMzNEE4NTMiLz4KPHJlY3QgeD0iMTUwIiB5PSIyMjgiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjQiIHJ4PSIxMiIgZmlsbD0iIzQyODVGNCIvPgo8dGV4dCB4PSIyMDAiIHk9IjI0NCIgZm9udC1mYW1pbHk9IlJvYm90bywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkdvb2dsZSBSZXZpZXc8L3RleHQ+CjxyZWN0IHg9IjE1MCIgeT0iMjYyIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjE4IiByeD0iOSIgZmlsbD0iI0YxRjNGNCIgc3Ryb2tlPSIjREFEQ0UwIi8+CjxyZWN0IHg9IjE1MCIgeT0iMjg4IiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjE4IiByeD0iOSIgZmlsbD0iI0YxRjNGNCIgc3Ryb2tlPSIjREFEQ0UwIi8+CjxyZWN0IHg9IjE1MCIgeT0iMzE0IiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjE4IiByeD0iOSIgZmlsbD0iI0YxRjNGNCIgc3Ryb2tlPSIjREFEQ0UwIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMzc1IiBmb250LWZhbWlseT0iUm9ib3RvLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzVGNjM2OCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UHJvZHVjdCBwaG90byAzIOKAlCBwb3J0Zm9saW8gcGFnZSDigJQgcmVwbGFjZSBtZTwvdGV4dD4KPC9zdmc+" alt="QeNFC digital portfolio page preview" onerror="this.onerror=null;this.src=this.dataset.fallback;">
+        </div>
+      </div>
+      <div class="gallery-dots" id="galleryDots"></div>
+      <div class="thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <!-- ============ INFO / BUY BOX ============ -->
+    <div class="info" id="buy-box">
+      <div class="badge-row">
+        <span class="badge blue">NFC + QR</span>
+        <span class="badge green">Instant Google Review</span>
+        <span class="badge red">Free Portfolio Page</span>
+      </div>
+      <h1 class="product-title">QeNFC — Smart Google Review Card</h1>
+      <p class="product-sub">Tap-to-review NFC card with backup QR code. Comes with a free custom digital portfolio page for your business.</p>
+
+      <div class="rating-row">
+        <span class="stars">★★★★★</span>
+        <span class="rating-count">4.9 · trusted by 200+ businesses</span>
+      </div>
+
+      <div class="price-box">
+        <div class="price-row">
+          <span class="price-now">₹100</span>
+          <span class="price-was">₹150</span>
+          <span class="price-off">33% off</span>
+        </div>
+        <p class="price-unit-note">Price per piece · inclusive of setup for portfolio page</p>
+
+        <div class="qty-block">
+          <div class="qty-label-row">
+            <span class="qty-label">Number of pieces</span>
+            <span class="qty-value" id="qtyValueDisplay">5</span>
+          </div>
+          <input type="range" id="qtySlider" min="5" max="500" step="1" value="5" aria-label="Select number of pieces">
+          <div class="qty-minmax"><span>Min 5</span><span>Max 500</span></div>
+          <div class="qty-steppers">
+            <button type="button" class="stepper-btn" id="qtyMinus" aria-label="Decrease quantity">−</button>
+            <input type="number" class="qty-input" id="qtyNumberInput" min="5" max="500" value="5" aria-label="Quantity">
+            <button type="button" class="stepper-btn" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <div class="total-row">
+          <span class="total-label">Total for <span id="totalQtyLabel">5</span> pcs</span>
+          <div class="total-price-wrap">
+            <div><span class="total-now" id="totalNow">₹500</span><span class="total-was" id="totalWas">₹750</span></div>
+            <div class="total-save" id="totalSave">You save ₹250</div>
+          </div>
+        </div>
+
+        <button class="order-now-btn" id="orderNowBtn">
+          🛒 Order Now
+        </button>
+        <p class="cod-note">⚠️ No Cash on Delivery — advance payment only</p>
+        <div class="delivery-note"><span class="dot blue"></span> All-India delivery only · no international shipping</div>
+        <div class="delivery-note"><span class="dot green"></span> Ships in 3–5 business days after payment confirmation</div>
+        <div class="delivery-note"><span class="dot yellow"></span> Free setup support via Instagram @qenfc</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ WHAT'S INCLUDED ============ -->
+  <section class="section">
+    <div class="section-head">
+      <p class="section-eyebrow">What's included</p>
+      <h2 class="section-title">One card, your entire online presence</h2>
+      <p class="section-sub">Every QeNFC card unlocks a free custom portfolio page — set up once, update anytime.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon blue">★</div>
+        <h3>Direct Google Review link</h3>
+        <p>One tap or scan takes customers straight to your Google review pop-up — no searching, no typing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon red">🖼</div>
+        <h3>Your logo, front and center</h3>
+        <p>Your business logo is placed on the portfolio page so customers instantly recognize your brand.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon yellow">🔗</div>
+        <h3>Website & handles, all linked</h3>
+        <p>Website, Instagram, Facebook, YouTube and other handles are added as clickable buttons on your page.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green">📶</div>
+        <h3>NFC tap + QR code backup</h3>
+        <p>Works with any modern smartphone via NFC tap. QR code included as a backup for older devices.</p>
+      </div>
+    </div>
+
+    <div class="handle-chips">
+      <span class="chip"><span class="dot blue"></span>Google Reviews</span>
+      <span class="chip"><span class="dot red"></span>Website</span>
+      <span class="chip"><span class="dot yellow"></span>Instagram</span>
+      <span class="chip"><span class="dot green"></span>Facebook</span>
+      <span class="chip"><span class="dot blue"></span>YouTube</span>
+      <span class="chip"><span class="dot red"></span>+ more handles</span>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section">
+    <div class="section-head">
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-title">From order to first review</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Order your cards</h4>
+        <p>Choose quantity, fill delivery details and confirm your order via WhatsApp.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Share your details</h4>
+        <p>Send us your logo, website and social handles so we can set up your portfolio page.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Tap, scan, review</h4>
+        <p>Place the card at your counter — customers tap or scan and leave a Google review instantly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SETUP HELP ============ -->
+  <section class="section">
+    <div class="setup-help">
+      <div class="ig-icon">📷</div>
+      <div class="setup-help-text">
+        <strong>Need help setting it up?</strong>
+        <span>Visit <strong>@qenfc</strong> on Instagram and check our pinned posts for a full setup walkthrough.</span>
+      </div>
+      <a class="ig-link" href="https://www.instagram.com/qenfc/" target="_blank" rel="noopener">Open Instagram</a>
+    </div>
+  </section>
+
+  <!-- ============ TRUST STRIP ============ -->
+  <section class="section">
+    <div class="trust-strip">
+      <div class="trust-item"><div class="ti-icon">🇮🇳</div><p>All-India delivery</p></div>
+      <div class="trust-item"><div class="ti-icon">🔒</div><p>Secure advance payment</p></div>
+      <div class="trust-item"><div class="ti-icon">⚡</div><p>Quick 3–5 day dispatch</p></div>
+      <div class="trust-item"><div class="ti-icon">💬</div><p>WhatsApp support</p></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>Q</span><span>e</span><span>N</span><span>F</span><span>C</span></div>
+    <p>QeNFC makes smart NFC + QR Google review cards with a free built-in digital portfolio page — your logo, website and social handles, all in one tap. All-India delivery only.</p>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/qenfc/" target="_blank" rel="noopener">Instagram @qenfc</a>
+      <a href="https://wa.me/917306593955" target="_blank" rel="noopener">WhatsApp Support</a>
+      <a href="#buy-box">Order Now</a>
+    </div>
+    <p class="footer-fine">© 2026 QeNFC. Prices shown are per piece and inclusive of portfolio page setup. Shipping charges, if any, will be confirmed on WhatsApp before dispatch. No Cash on Delivery.</p>
+  </div>
+</footer>
+
+<!-- ============ FLOATING WHATSAPP HELP ============ -->
+<a class="fab-help" id="fabHelp" href="#" target="_blank" rel="noopener" aria-label="Need help? Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="#fff"><path d="M16.003 3C9.376 3 4 8.373 4 15c0 2.362.664 4.57 1.816 6.45L4 29l7.723-1.784A11.94 11.94 0 0 0 16.003 27C22.63 27 28 21.627 28 15S22.63 3 16.003 3zm0 21.75c-1.86 0-3.6-.51-5.09-1.396l-.365-.216-4.583 1.058 1.078-4.47-.238-.375A9.71 9.71 0 0 1 5.25 15c0-5.936 4.817-10.75 10.753-10.75S26.75 9.064 26.75 15 21.94 24.75 16.003 24.75zm5.914-8.043c-.323-.162-1.912-.943-2.208-1.05-.296-.108-.512-.162-.727.162-.216.323-.836 1.05-1.025 1.266-.188.216-.377.243-.7.081-.323-.162-1.364-.503-2.598-1.603-.96-.856-1.609-1.913-1.798-2.236-.188-.323-.02-.498.142-.66.146-.146.323-.377.485-.566.161-.188.215-.323.323-.539.108-.216.054-.404-.027-.566-.081-.162-.727-1.752-.997-2.4-.263-.63-.53-.545-.727-.555l-.619-.011a1.19 1.19 0 0 0-.861.404c-.296.323-1.13 1.104-1.13 2.694s1.157 3.127 1.318 3.343c.162.216 2.278 3.478 5.52 4.878.771.333 1.372.532 1.841.681.774.246 1.478.211 2.035.128.621-.093 1.912-.782 2.182-1.537.27-.755.27-1.402.189-1.537-.081-.135-.296-.216-.62-.378z"/></svg>
+  <span>Need help?</span>
+</a>
+
+<!-- ============ ORDER MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h2>Delivery Details</h2>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="orderForm" novalidate>
+        <div class="form-row" id="row-name">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="e.g. Rahul Menon" required autocomplete="name">
+          <span class="field-error">Please enter your full name</span>
+        </div>
+
+        <div class="form-row" id="row-phone">
+          <label for="phone">Phone Number <span class="hint">(WhatsApp preferred)</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10" required autocomplete="tel">
+          <span class="field-error">Enter a valid 10-digit phone number</span>
+        </div>
+
+        <div class="form-row" id="row-qty">
+          <label for="formQty">Number of Pieces <span class="hint">(min 5)</span></label>
+          <input type="number" id="formQty" name="formQty" min="5" max="500" required>
+          <span class="field-error">Minimum order is 5 pieces</span>
+        </div>
+
+        <div class="form-row" id="row-address">
+          <label for="address">Full Delivery Address</label>
+          <textarea id="address" name="address" placeholder="House/Flat No., Street, Locality, Landmark" required autocomplete="street-address"></textarea>
+          <span class="field-error">Please enter your delivery address</span>
+        </div>
+
+        <div class="two-col">
+          <div class="form-row" id="row-city">
+            <label for="city">City / Town</label>
+            <input type="text" id="city" name="city" placeholder="e.g. Kochi" required autocomplete="address-level2">
+            <span class="field-error">Enter your city/town</span>
+          </div>
+          <div class="form-row" id="row-pincode">
+            <label for="pincode">PIN Code</label>
+            <input type="text" id="pincode" name="pincode" placeholder="6-digit PIN" inputmode="numeric" maxlength="6" required autocomplete="postal-code">
+            <span class="field-error">Enter a valid 6-digit PIN code</span>
+          </div>
+        </div>
+
+        <div class="form-row" id="row-state">
+          <label for="state">State</label>
+          <select id="state" name="state" required>
+            <option value="" disabled selected>Select your state</option>
+          </select>
+          <span class="field-error">Please select your state</span>
+        </div>
+
+        <div class="form-row" id="row-district" style="display:none;">
+          <label for="district">District (Kerala)</label>
+          <select id="district" name="district">
+            <option value="" disabled selected>Select your district</option>
+          </select>
+          <span class="field-error">Please select your district</span>
+        </div>
+
+        <div class="form-summary">
+          <div class="form-summary-row"><span>Pieces</span><strong id="sumQty">5</strong></div>
+          <div class="form-summary-row"><span>Price per piece</span><strong>₹100</strong></div>
+          <div class="form-summary-row"><span>Delivery</span><strong>All India</strong></div>
+          <div class="form-summary-row"><span>Payment</span><strong>Advance only (No COD)</strong></div>
+          <div class="form-summary-total"><span>Total Payable</span><span id="sumTotal">₹500</span></div>
+        </div>
+
+        <button type="button" id="submitOrderBtn" class="wa-submit-btn">
+          <svg viewBox="0 0 32 32" fill="#fff"><path d="M16.003 3C9.376 3 4 8.373 4 15c0 2.362.664 4.57 1.816 6.45L4 29l7.723-1.784A11.94 11.94 0 0 0 16.003 27C22.63 27 28 21.627 28 15S22.63 3 16.003 3zm0 21.75c-1.86 0-3.6-.51-5.09-1.396l-.365-.216-4.583 1.058 1.078-4.47-.238-.375A9.71 9.71 0 0 1 5.25 15c0-5.936 4.817-10.75 10.753-10.75S26.75 9.064 26.75 15 21.94 24.75 16.003 24.75zm5.914-8.043c-.323-.162-1.912-.943-2.208-1.05-.296-.108-.512-.162-.727.162-.216.323-.836 1.05-1.025 1.266-.188.216-.377.243-.7.081-.323-.162-1.364-.503-2.598-1.603-.96-.856-1.609-1.913-1.798-2.236-.188-.323-.02-.498.142-.66.146-.146.323-.377.485-.566.161-.188.215-.323.323-.539.108-.216.054-.404-.027-.566-.081-.162-.727-1.752-.997-2.4-.263-.63-.53-.545-.727-.555l-.619-.011a1.19 1.19 0 0 0-.861.404c-.296.323-1.13 1.104-1.13 2.694s1.157 3.127 1.318 3.343c.162.216 2.278 3.478 5.52 4.878.771.333 1.372.532 1.841.681.774.246 1.478.211 2.035.128.621-.093 1.912-.782 2.182-1.537.27-.755.27-1.402.189-1.537-.081-.135-.296-.216-.62-.378z"/></svg>
+          Order via WhatsApp
+        </button>
+        <p class="form-note">You'll be redirected to WhatsApp with your order details pre-filled. Please tap <strong>Send</strong> there to confirm your order with us.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REDIRECT TOAST ============ -->
+<div class="toast-overlay" id="toastOverlay">
+  <div class="toast-box">
+    <div class="wa-circle">
+      <svg viewBox="0 0 32 32" fill="#25D366"><path d="M16.003 3C9.376 3 4 8.373 4 15c0 2.362.664 4.57 1.816 6.45L4 29l7.723-1.784A11.94 11.94 0 0 0 16.003 27C22.63 27 28 21.627 28 15S22.63 3 16.003 3zm0 21.75c-1.86 0-3.6-.51-5.09-1.396l-.365-.216-4.583 1.058 1.078-4.47-.238-.375A9.71 9.71 0 0 1 5.25 15c0-5.936 4.817-10.75 10.753-10.75S26.75 9.064 26.75 15 21.94 24.75 16.003 24.75zm5.914-8.043c-.323-.162-1.912-.943-2.208-1.05-.296-.108-.512-.162-.727.162-.216.323-.836 1.05-1.025 1.266-.188.216-.377.243-.7.081-.323-.162-1.364-.503-2.598-1.603-.96-.856-1.609-1.913-1.798-2.236-.188-.323-.02-.498.142-.66.146-.146.323-.377.485-.566.161-.188.215-.323.323-.539.108-.216.054-.404-.027-.566-.081-.162-.727-1.752-.997-2.4-.263-.63-.53-.545-.727-.555l-.619-.011a1.19 1.19 0 0 0-.861.404c-.296.323-1.13 1.104-1.13 2.694s1.157 3.127 1.318 3.343c.162.216 2.278 3.478 5.52 4.878.771.333 1.372.532 1.841.681.774.246 1.478.211 2.035.128.621-.093 1.912-.782 2.182-1.537.27-.755.27-1.402.189-1.537-.081-.135-.296-.216-.62-.378z"/></svg>
+    </div>
+    <h3>Taking you to WhatsApp…</h3>
+    <p id="toastMsg">Your order details are ready. Once WhatsApp opens, just tap the <strong>Send</strong> button to confirm your order with QeNFC.</p>
+    <div class="spinner" id="toastSpinner"></div>
+    <button class="toast-continue" id="toastContinueBtn" style="display:none;">Open WhatsApp</button>
+  </div>
+</div>
+
+<script>
+window.addEventListener('error', function(e){
+  alert('QeNFC debug — a script error occurred:\n' + e.message + '\n(line ' + e.lineno + ')\n\nPlease screenshot this and send it back.');
+});
+(function(){
+  "use strict";
+
+  /* ---------- Config ---------- */
+  var UNIT_PRICE = 100;
+  var UNIT_MRP = 150;
+  var MIN_QTY = 5;
+  var MAX_QTY = 500;
+  var SELLER_WHATSAPP = "917306593955"; // +91 7306593955
+  var SHOP_NAME = "QeNFC";
+
+  var INDIA_STATES = ["Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chandigarh","Chhattisgarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Ladakh","Lakshadweep","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Puducherry","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"];
+
+  var KERALA_DISTRICTS = ["Alappuzha","Ernakulam","Idukki","Kannur","Kasaragod","Kollam","Kottayam","Kozhikode","Malappuram","Palakkad","Pathanamthitta","Thiruvananthapuram","Thrissur","Wayanad"];
+
+  /* ---------- Helpers ---------- */
+  function inr(n){ return "₹" + Number(n).toLocaleString('en-IN'); }
+  function clamp(v, min, max){ return Math.min(Math.max(v, min), max); }
+
+  /* ---------- Gallery ---------- */
+  var track = document.getElementById('galleryTrack');
+  var dotsWrap = document.getElementById('galleryDots');
+  var thumbsWrap = document.getElementById('galleryThumbs');
+  var imgs = track.querySelectorAll('img');
+  var current = 0;
+
+  imgs.forEach(function(img, i){
+    var dot = document.createElement('button');
+    if(i===0) dot.className = 'active';
+    dot.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(dot);
+
+    var th = document.createElement('button');
+    if(i===0) th.className = 'active';
+    var thImg = document.createElement('img');
+    thImg.src = img.getAttribute('src'); thImg.alt = img.alt;
+    if(img.dataset.fallback) thImg.dataset.fallback = img.dataset.fallback;
+    thImg.onerror = function(){ this.onerror=null; if(this.dataset.fallback) this.src = this.dataset.fallback; };
+    th.appendChild(thImg);
+    th.addEventListener('click', function(){ goTo(i); });
+    thumbsWrap.appendChild(th);
+  });
+
+  function goTo(i){
+    current = i;
+    track.style.transform = 'translateX(-' + (i*100) + '%)';
+    dotsWrap.querySelectorAll('button').forEach(function(d, idx){ d.classList.toggle('active', idx===i); });
+    thumbsWrap.querySelectorAll('button').forEach(function(d, idx){ d.classList.toggle('active', idx===i); });
+  }
+
+  // basic swipe support
+  var startX = null;
+  track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+  track.addEventListener('touchend', function(e){
+    if(startX===null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    if(Math.abs(dx) > 40){
+      if(dx < 0 && current < imgs.length-1) goTo(current+1);
+      else if(dx > 0 && current > 0) goTo(current-1);
+    }
+    startX = null;
+  }, {passive:true});
+
+  /* ---------- Quantity slider + price ---------- */
+  var slider = document.getElementById('qtySlider');
+  var qtyValueDisplay = document.getElementById('qtyValueDisplay');
+  var qtyNumberInput = document.getElementById('qtyNumberInput');
+  var qtyMinus = document.getElementById('qtyMinus');
+  var qtyPlus = document.getElementById('qtyPlus');
+  var totalQtyLabel = document.getElementById('totalQtyLabel');
+  var totalNow = document.getElementById('totalNow');
+  var totalWas = document.getElementById('totalWas');
+  var totalSave = document.getElementById('totalSave');
+  var formQty = document.getElementById('formQty');
+  var sumQty = document.getElementById('sumQty');
+  var sumTotal = document.getElementById('sumTotal');
+
+  var qty = MIN_QTY;
+
+  function updateSliderFill(){
+    var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+    slider.style.setProperty('--fill', pct + '%');
+  }
+
+  function setQty(v, opts){
+    opts = opts || {};
+    v = clamp(Math.round(v) || MIN_QTY, MIN_QTY, MAX_QTY);
+    qty = v;
+    if(!opts.skipSlider) slider.value = v;
+    qtyNumberInput.value = v;
+    qtyValueDisplay.textContent = v;
+    totalQtyLabel.textContent = v;
+    updateSliderFill();
+    renderPrice();
+    if(!opts.skipForm){
+      formQty.value = v;
+      updateFormSummary();
+    }
+  }
+
+  function renderPrice(){
+    var total = qty * UNIT_PRICE;
+    var totalMrp = qty * UNIT_MRP;
+    totalNow.textContent = inr(total);
+    totalWas.textContent = inr(totalMrp);
+    totalSave.textContent = "You save " + inr(totalMrp-total);
+  }
+
+  slider.addEventListener('input', function(){ setQty(this.value); });
+  qtyNumberInput.addEventListener('change', function(){ setQty(this.value); });
+  qtyMinus.addEventListener('click', function(){ setQty(qty-1); });
+  qtyPlus.addEventListener('click', function(){ setQty(qty+1); });
+
+  setQty(MIN_QTY);
+
+  /* ---------- State / District dropdowns ---------- */
+  var stateSelect = document.getElementById('state');
+  var districtRow = document.getElementById('row-district');
+  var districtSelect = document.getElementById('district');
+
+  INDIA_STATES.forEach(function(s){
+    var opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    stateSelect.appendChild(opt);
+  });
+  KERALA_DISTRICTS.forEach(function(d){
+    var opt = document.createElement('option');
+    opt.value = d; opt.textContent = d;
+    districtSelect.appendChild(opt);
+  });
+
+  stateSelect.addEventListener('change', function(){
+    if(this.value === 'Kerala'){
+      districtRow.style.display = 'block';
+      districtSelect.setAttribute('required', 'required');
+    } else {
+      districtRow.style.display = 'none';
+      districtSelect.removeAttribute('required');
+      districtSelect.value = '';
+      districtRow.classList.remove('invalid');
+    }
+  });
+
+  /* ---------- Modal open/close ---------- */
+  var modalOverlay = document.getElementById('modalOverlay');
+  var orderNowBtn = document.getElementById('orderNowBtn');
+  var modalClose = document.getElementById('modalClose');
+
+  orderNowBtn.addEventListener('click', function(){
+    formQty.value = qty;
+    updateFormSummary();
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', function(e){ if(e.target === modalOverlay) closeModal(); });
+
+  formQty.addEventListener('input', function(){
+    var v = clamp(parseInt(this.value,10) || MIN_QTY, MIN_QTY, MAX_QTY);
+    updateFormSummary(v);
+  });
+  formQty.addEventListener('change', function(){
+    var v = clamp(parseInt(this.value,10) || MIN_QTY, MIN_QTY, MAX_QTY);
+    this.value = v;
+    setQty(v, {skipForm:true});
+    updateFormSummary(v);
+  });
+
+  function updateFormSummary(v){
+    v = v || parseInt(formQty.value,10) || qty;
+    sumQty.textContent = v;
+    sumTotal.textContent = inr(v * UNIT_PRICE);
+  }
+
+  /* ---------- Form validation ---------- */
+  var orderForm = document.getElementById('orderForm');
+
+  function validateField(rowSuffix, testFn, fieldId){
+    var row = document.getElementById('row-' + rowSuffix);
+    var el = document.getElementById(fieldId || rowSuffix);
+    if(!row || !el) return true; // fail-safe: never crash the submit handler
+    var ok = testFn(el.value.trim());
+    row.classList.toggle('invalid', !ok);
+    return ok;
+  }
+
+  function validateForm(){
+    var ok = true;
+    ok = validateField('name', function(v){ return v.length >= 2; }, 'fullName') && ok;
+    ok = validateField('phone', function(v){ return /^[6-9]\d{9}$/.test(v); }) && ok;
+    ok = validateField('qty', function(v){ var n=parseInt(v,10); return n>=MIN_QTY && n<=MAX_QTY; }, 'formQty') && ok;
+    ok = validateField('address', function(v){ return v.length >= 6; }) && ok;
+    ok = validateField('city', function(v){ return v.length >= 2; }) && ok;
+    ok = validateField('pincode', function(v){ return /^\d{6}$/.test(v); }) && ok;
+    ok = validateField('state', function(v){ return v.length > 0; }) && ok;
+    if(stateSelect.value === 'Kerala'){
+      ok = validateField('district', function(v){ return v.length > 0; }) && ok;
+    }
+    return ok;
+  }
+
+  var submitOrderBtn = document.getElementById('submitOrderBtn');
+  submitOrderBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    if(!validateForm()){
+      var firstInvalid = orderForm.querySelector('.form-row.invalid');
+      if(firstInvalid && firstInvalid.scrollIntoView) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    sendToWhatsApp();
+  });
+  // Prevent Enter-key accidental native form submission (button is type=button, but guard anyway)
+  orderForm.addEventListener('submit', function(e){ e.preventDefault(); });
+
+  /* ---------- Build WhatsApp message & redirect ---------- */
+  function sendToWhatsApp(){
+    var name = document.getElementById('fullName').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var pieces = clamp(parseInt(formQty.value,10) || MIN_QTY, MIN_QTY, MAX_QTY);
+    var address = document.getElementById('address').value.trim();
+    var city = document.getElementById('city').value.trim();
+    var pincode = document.getElementById('pincode').value.trim();
+    var state = stateSelect.value;
+    var district = (state === 'Kerala') ? districtSelect.value : '';
+
+    var total = pieces * UNIT_PRICE;
+    var totalMrp = pieces * UNIT_MRP;
+
+    var lines = [];
+    lines.push("Hello " + SHOP_NAME + "! I'd like to place an order.");
+    lines.push("");
+    lines.push("*Product:* QeNFC Google Review Card (NFC + QR)");
+    lines.push("*Quantity:* " + pieces + " pcs");
+    lines.push("*Price per piece:* ₹" + UNIT_PRICE);
+    lines.push("*Total MRP:* ₹" + totalMrp.toLocaleString('en-IN'));
+    lines.push("*Total Payable:* ₹" + total.toLocaleString('en-IN'));
+    lines.push("");
+    lines.push("*Delivery Details:*");
+    lines.push("Name: " + name);
+    lines.push("Phone: " + phone);
+    lines.push("Address: " + address);
+    lines.push("City/Town: " + city);
+    if(district) lines.push("District: " + district);
+    lines.push("State: " + state);
+    lines.push("PIN Code: " + pincode);
+    lines.push("Country: India");
+    lines.push("");
+    lines.push("Payment: Advance payment (No COD)");
+    lines.push("Please share payment details to confirm this order. Thank you!");
+
+    var message = lines.join("\n");
+    var waUrl = "https://wa.me/" + SELLER_WHATSAPP + "?text=" + encodeURIComponent(message);
+
+    showToastAndRedirect(waUrl);
+  }
+
+  /* ---------- Toast before redirect ---------- */
+  var toastOverlay = document.getElementById('toastOverlay');
+  var toastSpinner = document.getElementById('toastSpinner');
+  var toastContinueBtn = document.getElementById('toastContinueBtn');
+
+  function showToastAndRedirect(url){
+    closeModal();
+    toastOverlay.classList.add('open');
+    toastSpinner.style.display = 'block';
+    toastContinueBtn.style.display = 'none';
+
+    var redirected = false;
+    function doRedirect(){
+      if(redirected) return;
+      redirected = true;
+      window.location.href = url;
+    }
+
+    setTimeout(function(){
+      toastSpinner.style.display = 'none';
+      toastContinueBtn.style.display = 'block';
+      doRedirect();
+    }, 1600);
+
+    toastContinueBtn.onclick = function(){
+      doRedirect();
+    };
+  }
+
+  /* ---------- Floating WhatsApp help button ---------- */
+  var fabHelp = document.getElementById('fabHelp');
+  var helpMessage = "Hi " + SHOP_NAME + "! I need some help regarding the QeNFC Google review card.";
+  fabHelp.href = "https://wa.me/" + SELLER_WHATSAPP + "?text=" + encodeURIComponent(helpMessage);
+
+})();
+</script>
+</body>
+</html>
