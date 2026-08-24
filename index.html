@@ -127,6 +127,7 @@
   .price-was{font-size:16px; color:var(--ink-2); text-decoration:line-through; text-decoration-color:var(--g-red);}
   .price-off{font-size:13px; font-weight:700; color:var(--g-green);}
   .price-unit-note{font-size:12px; color:var(--ink-2); margin-top:4px;}
+  .product-dims{font-size:12.5px; color:var(--ink-2); margin:0 0 10px; font-weight:400;}
 
   .qty-block{margin-top:16px;}
   .qty-label-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
@@ -177,13 +178,13 @@
   }
   .order-now-btn:active{background:#3367D6;}
   .cod-note{
-    text-align:center; font-size:12px; color:var(--g-red); font-weight:500; margin-top:10px;
+    text-align:left; font-size:12.5px; color:var(--ink-2); font-weight:400; margin-top:12px;
   }
   .delivery-note{
     display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-2); margin-top:12px;
   }
   .dot{width:6px; height:6px; border-radius:50%; flex-shrink:0;}
-  .dot.blue{background:var(--g-blue);} .dot.green{background:var(--g-green);} .dot.yellow{background:var(--g-yellow);}
+  .dot.blue{background:var(--g-blue);} .dot.green{background:var(--g-green);} .dot.yellow{background:var(--g-yellow);} .dot.red{background:var(--g-red);}
 
   /* ===== Section shared ===== */
   .section{padding:34px 16px 0;}
@@ -412,6 +413,7 @@
       </div>
       <h1 class="product-title">QeNFC — Smart Google Review Card</h1>
       <p class="product-sub">Tap-to-review NFC card with backup QR code. Comes with a free custom digital portfolio page for your business.</p>
+      <p class="product-dims">Card size: 4.13 × 5.83 inches</p>
 
       <div class="rating-row">
         <span class="stars">★★★★★</span>
@@ -451,10 +453,11 @@
         <button class="order-now-btn" id="orderNowBtn">
           🛒 Order Now
         </button>
-        <p class="cod-note">⚠️ No Cash on Delivery — advance payment only</p>
+        <p class="cod-note">No Cash on Delivery — advance payment only</p>
         <div class="delivery-note"><span class="dot blue"></span> All-India delivery only · no international shipping</div>
         <div class="delivery-note"><span class="dot green"></span> Ships in 3–5 business days after payment confirmation</div>
         <div class="delivery-note"><span class="dot yellow"></span> Free setup support via Instagram @qenfc</div>
+        <div class="delivery-note"><span class="dot red"></span> No refunds or returns once the order is shipped</div>
       </div>
     </div>
   </div>
@@ -557,7 +560,7 @@
       <a href="https://wa.me/917306593955" target="_blank" rel="noopener">WhatsApp Support</a>
       <a href="#buy-box">Order Now</a>
     </div>
-    <p class="footer-fine">© 2026 QeNFC. Prices shown are per piece and inclusive of portfolio page setup. Shipping charges, if any, will be confirmed on WhatsApp before dispatch. No Cash on Delivery.</p>
+    <p class="footer-fine">© 2026 QeNFC. Prices shown are per piece and inclusive of portfolio page setup. Shipping charges, if any, will be confirmed on WhatsApp before dispatch. No Cash on Delivery. No refunds or returns once an order has been shipped.</p>
   </div>
 </footer>
 
